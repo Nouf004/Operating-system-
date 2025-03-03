@@ -1,5 +1,5 @@
 import java.util.*;
- class  Process implements Comparable<Process>{
+class  Process implements Comparable<Process>{
    int Process_ID;
    int Arrival_Time,Burst_Time;
    int Remaining_Time;
