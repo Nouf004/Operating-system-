@@ -1,38 +1,43 @@
 public class MemoryBlock {
-    int blockNumber;
+    int blockNum;
     int size;
     int startAddress;
     int endAddress;
-    boolean isFree;
+    String status; // "free" or "allocated"
     String processID;
     int internalFragmentation;
 
-    public MemoryBlock(int blockNumber, int size, int startAddress) {
-        this.blockNumber = blockNumber;
+    public MemoryBlock(int blockNum, int size, int startAddress) {
+        this.blockNum = blockNum;
         this.size = size;
         this.startAddress = startAddress;
         this.endAddress = startAddress + size - 1;
-        this.isFree = true;
+        this.status = "free";
         this.processID = "Null";
         this.internalFragmentation = 0;
     }
 
-    public void allocate(String pid, int requestedSize) {
-        this.isFree = false;
-        this.processID = pid;
-        this.internalFragmentation = this.size - requestedSize;
+    public void allocate(String processID, int Size) {
+        status = "allocated";
+        this.processID = processID;
+        internalFragmentation = this.size - Size;
     }
 
     public void deallocate() {
-        this.isFree = true;
-        this.processID = "Null";
-        this.internalFragmentation = 0;
+        status = "free";
+        processID = "Null";
+        internalFragmentation = 0;
     }
 
-    @Override
+    // For printReport()
     public String toString() {
         return String.format("Block%d   %dKB   %d-%d   %s   %s   %dKB",
-                blockNumber, size, startAddress, endAddress,
-                isFree ? "free" : "allocated", processID, internalFragmentation);
+                blockNum, size, startAddress, endAddress, status, processID, internalFragmentation);
+    }
+
+    // For the initial memory
+    public String toString2() {
+        return String.format("Block%d   %dKB     %d-%d      %s",
+                blockNum, size, startAddress, endAddress, status);
     }
 }
